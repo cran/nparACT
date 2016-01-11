@@ -10,8 +10,8 @@ nparACT_auxfunctions1 <- list(
   },
   
   nparACT_data_min = function(b, SR, data){
-    data_min <- matrix(NA, (b/SR)/60)
-    for (d in 1:((b/SR)/60)){
+    data_min <- matrix(NA, b) # bug in nparACT 0.1 "data_min <- matrix(NA, (b/SR)/60)"
+    for (d in 1:b){ # nparACT 0.1 "for (d in 1:((b/SR)/60))"
       subset_min <- data$activity[(((d-1)*(SR*60))+1):((d*(SR*60)))]
       data_min[d] <- mean(subset_min)
     }
@@ -26,9 +26,9 @@ nparACT_auxfunctions1 <- list(
     }
   },
   
-  nparACT_minaverage = function(a, data_min){
-    ## ---- Minutewise averages across 24hrs
-    c <- ceiling(a/1440)  
+  nparACT_minaverage = function(b, data_min){
+    ## ---- Minutewise averages across 24hrs -> 1440 values
+    c <- ceiling(b/1440)  
     data_min[c*1440] <- NA 
     minaverage <- matrix(NA, 1440)
     for (i in 1:1440){    
@@ -38,12 +38,13 @@ nparACT_auxfunctions1 <- list(
     return(minaverage)
   },
   
+## ---- Hourly averages
   nparACT_hraverage_GA_loop = function(minaverage, data, a , SR){
     hraverage <- matrix(NA)
     for (i in 1:24){
       hraverage [i] <- mean(minaverage[(((i-1)*60)+1):(60*i)])
     }
-        daytime <- matrix(NA)
+    daytime <- matrix(NA)
     time <- data$time
     time <- as.character(time)
     for (v in seq(1,a,(SR*60*60))){  
@@ -62,6 +63,7 @@ nparACT_auxfunctions1 <- list(
     seq <- seq(start.time, length.out = 24)
     hraverage_time <- for_hraverage_time[seq]
     hraverage_time <- as.numeric(hraverage_time)
+    hraverage_time[hraverage_time==24] <- 0
     df_hraverage <- data.frame(hraverage_time, hraverage)
     df_hraverage <- df_hraverage[ order(hraverage_time, hraverage), ]
     hraverage_sorted <- df_hraverage[, 2]

@@ -13,7 +13,7 @@ nparACT_flex_loop(path, SR, cutoff = 1, minutes, plot = T)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{path}{
-Character string containing path to location of actigraphy files. Actigraphy files must contain one column with actigraphy values and one column with a date/time vector,  which must be character strings of form \code{YYYY-MM-DD HH:MM:SS} or \code{HH:MM:SS}.
+Character string containing path to location of actigraphy files. Actigraphy files must contain a first column with a date/time vector, which must be of form \code{YYYY-MM-DD HH:MM:SS} or \code{YYYY/MM/DD HH:MM:SS}, i.e. in an unambiguous date format and a second column with numeric actigraphy values. Input files can either be text or comma separated value files.
 }
   \item{SR}{
 Sampling rate in Hz.

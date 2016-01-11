@@ -22,27 +22,45 @@ nparACT_auxfunctions2 <- list(
     timeinfo = temp[ (temp_nums %% 3) == 1 ] 
     start.time <- as.numeric(timeinfo[1])  
     
-    mf_labeller <- function(variable, value){
-      if (variable == "day_count"){
-        value[value == 1] <- "Days 1-2"
-        value[value == 2] <- "Days 3-4"
-        value[value == 3] <- "Days 5-6"
-        value[value == 4] <- "Days 7-8"
-        value[value == 5] <- "Days 9-10"
-        value[value == 6] <- "Days 11-12"
-        value[value == 7] <- "Days 13-14"
-        value[value == 8] <- "Days 15-16"
-        value[value == 9] <- "Days 17-18"
-        value[value == 10] <- "Days 19-20"
-        value[value == 11] <- "Days 21-22"
-        value[value == 12] <- "Days 23-24"
-        value[value == 13] <- "Days 25-26"
-        value[value == 14] <- "Days 27-28"
-        value[value == 15] <- "Days 29-30"
+    mf_labeller <- function(day_count){
+      for (ee in 1:length(day_count)){
+        if (day_count[ee] == 1){
+          day_count[ee] <- "Days 1-2"
+        } else if (day_count[ee] == 2){
+          day_count[ee] <- "Days 3-4"
+        } else if (day_count[ee] == 3){
+          day_count[ee] <- "Days 5-6"
+        } else if (day_count[ee] == 4){
+          day_count[ee] <- "Days 7-8"
+        } else if (day_count[ee] == 5){
+          day_count[ee] <- "Days 9-10"
+        } else if (day_count[ee] == 6){
+          day_count[ee] <- "Days 11-12"
+        } else if (day_count[ee] == 7){
+          day_count[ee] <- "Days 13-14"
+        } else if (day_count[ee] == 8){
+          day_count[ee] <- "Days 15-16"
+        } else if (day_count[ee] == 9){
+          day_count[ee] <- "Days 17-18"
+        } else if (day_count[ee] == 10){
+          day_count[ee] <- "Days 19-20"
+        } else if (day_count[ee] == 11){
+          day_count[ee] <- "Days 21-22"
+        } else if (day_count[ee] == 12){
+          day_count[ee] <- "Days 23-24"
+        } else if (day_count[ee] == 13){
+          day_count[ee] <- "Days 25-26"
+        } else if (day_count[ee] == 14){
+          day_count[ee] <- "Days 27-28"
+        } else if (day_count[ee] == 15){
+          day_count[ee] <- "Days 29-30"
+        }
       }
-      return(value)
+      return(day_count)
     }
+    mf_labeller <- as_labeller(mf_labeller)
     
+
     fill <- rep(NA, start.time-1)
     
     data_hrs2 <- data_hrs
@@ -106,11 +124,14 @@ nparACT_auxfunctions2 <- list(
     for_hraverage_plot.time <- rep(seq(1,24),2)
     seq <- seq(start.time, length.out = 24)
     hraverage_plot_time <- for_hraverage_plot.time[seq]
+    hraverage_plot_time[hraverage_plot_time==24] <- 0
     hraverage_plot_df <- data.frame (hraverage_plot_time, hraverage)
+    
     ppp <- ggplot(hraverage_plot_df, aes(x=hraverage_plot_time, y = hraverage))+ 
       geom_bar(stat="identity", width = 1, position = position_dodge(width = 0.5))+
       theme_bw()+
-      scale_x_discrete(limits = c(seq(1:24)), breaks = seq(1,24))+
+      scale_x_discrete(expand = c(0,0), limits = c(seq(0:23)-1), breaks = seq(0,23))+
+      expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
       ggtitle("Actigraphy Plot (24 hrs)\n Average across days")+
@@ -162,15 +183,16 @@ nparACT_auxfunctions2 <- list(
   },
   
   nparACT_plot_hraverage_GA_loop = function(matrix_hraverage){
-    GA_hraverage <- colMeans(matrix_hraverage)
-    GA_hraverage_plot_time <- seq(1,24)
+    GA_hraverage <- colMeans(matrix_hraverage, na.rm = T)
+    GA_hraverage_plot_time <- seq(1,24)-1
     
     GA_hraverage_plot_df <- data.frame (GA_hraverage_plot_time, GA_hraverage)
     
     p <- ggplot(GA_hraverage_plot_df, aes(x=GA_hraverage_plot_time, y = GA_hraverage))+ 
       geom_bar(stat="identity", width = 1, position = position_dodge(width = 0.5))+
       theme_bw()+
-      scale_x_discrete(limits = c(seq(1:24)), breaks = seq(1,24))+
+      scale_x_discrete(expand = c(0,0), limits = c(seq(0:23)-1), breaks = seq(0,23))+
+      expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
       ggtitle("Grand Average Actigraphy Plot (24 hrs)\n Average across days")+

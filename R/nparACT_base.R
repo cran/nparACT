@@ -4,15 +4,22 @@ function (name, SR, cutoff = 1, plot = T){
   if (is.data.frame(data)==F){
     data = as.data.frame(data)
   }
-  if(is.numeric(data[1]) == F){
-    data[,1] <- as.POSIXct(data[,1], format="%H:%M:%S")
-    names(data)[1] <- "time"
-    names(data)[2] <- "activity"
-  } else {
-    data[,2] <- as.POSIXct(data[,2], format="%H:%M:%S")
+  if(ncol(data) == 2){
+      data[,1] <- as.POSIXct(data[,1])
+      data[,2] <- as.numeric(as.character(data[,2]))
+      names(data)[1] <- "time"
+      names(data)[2] <- "activity"
+    } 
+  if(ncol(data) == 3){
+    names(data)[1] <- "date"
     names(data)[2] <- "time"
-    names(data)[1] <- "activity"
+    names(data)[3] <- "activity"
+    data$date <- NULL
+    data$time <- as.POSIXct(data$time, format="%H:%M:%S")  
+    data$activity <- as.numeric(as.character(data$activity))
   }
+  if (any(is.na(data$activity)) == TRUE) stop("Please check your data! It must not contain NAs")
+  
   bin_hr <- 60  
   a <- nrow(data) 
   b <- floor(a/(SR*60)) 
@@ -23,8 +30,8 @@ function (name, SR, cutoff = 1, plot = T){
   nparACT_auxfunctions1$nparACT_filt(data, a, cutoff)
   ## ------------------------------------------
   
-  ## ---- Calculate average for each minute (needed if SR != 1)
-  if (SR != 1){
+  ## ---- Calculate average for each minute (needed if SR != 1/60)
+  if (SR != 1/60){
     data_min <- nparACT_auxfunctions1$nparACT_data_min(b, SR, data)
   }  else {
     data_min <- data
