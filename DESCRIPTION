@@ -1,8 +1,8 @@
 Package: nparACT
 Type: Package
 Title: Non-Parametric Measures of Actigraphy Data
-Version: 0.2
-Date: 2016-01-10
+Version: 0.3
+Date: 2016-02-01
 Author: Christine Blume <christine.blume@sbg.ac.at>
 	Nayantara Santhi <n.santhi@surrey.ac.uk>
 	Manuel Schabus <manuel.schabus@sbg.ac.at>
@@ -12,6 +12,6 @@ Description: Computes interday stability (IS), intraday variability (IV) & the r
 License: GPL-2
 URL: http://www.r-project.org
 NeedsCompilation: no
-Packaged: 2016-01-11 12:59:29 UTC; b1003631
+Packaged: 2016-01-13 08:44:13 UTC; b1003631
 Repository: CRAN
-Date/Publication: 2016-01-11 14:06:33
+Date/Publication: 2016-01-25 14:54:29

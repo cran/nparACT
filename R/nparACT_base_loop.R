@@ -29,7 +29,7 @@ function (path, SR, cutoff=1, plot = T){
       names(data)[2] <- "time"
       names(data)[3] <- "activity"
       data$date <- NULL
-      data$time <- as.POSIXct(data$time, , format="%H:%M:%S")  
+      data$time <- as.POSIXct(data$time, format="%H:%M:%S")  
       data$activity <- as.numeric(as.character(data$activity))
     }
     if (any(is.na(data$activity)) == TRUE) stop("Please check your data! It must not contain NAs")

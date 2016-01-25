@@ -61,7 +61,7 @@ nparACT_auxfunctions2 <- list(
     mf_labeller <- as_labeller(mf_labeller)
     
 
-    fill <- rep(NA, start.time-1)
+    fill <- rep(NA, start.time)
     
     data_hrs2 <- data_hrs
     data_hrs2 <- c(fill, data_hrs2)
@@ -73,7 +73,7 @@ nparACT_auxfunctions2 <- list(
     hours_count <- seq(1:24)
     hours_count <- rep(hours_count,days_plot)
     
-    count_plot <- seq(1:48) 
+    count_plot <- seq(1:48)-1 
     count_plot <- rep(count_plot, length.out = days_hours_plot)
     
     day_count <- NA 
@@ -88,7 +88,8 @@ nparACT_auxfunctions2 <- list(
       geom_bar(stat="identity", width = 1, position = position_dodge(width = 0.5))+
       theme_bw()+
       facet_grid(day_count ~ ., labeller = mf_labeller)+
-      scale_x_discrete(limits = c(seq(1:48)), breaks = seq(2,48,2))+
+      scale_x_discrete(expand = c(0,0), limits = c(seq(0:47)-1), breaks = seq(0,47,2))+
+      expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
       ggtitle("Actigraphy Plot (48 hrs)\n Dual Day Display")+
@@ -171,6 +172,7 @@ nparACT_auxfunctions2 <- list(
       geom_bar(stat="identity", width = 1, position = position_dodge(width = 0.5))+
       theme_bw()+
       scale_x_discrete(limits = c(seq(1:1440)), breaks = seq(1,1440,60))+
+      expand_limits(x=c(-30,1470))+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
       ggtitle("Actigraphy Plot (24 hrs)\n Average across days")+
