@@ -1,5 +1,5 @@
 nparACT_base_loop <-
-function (path, SR, cutoff=1, plot = T){
+function (path, SR, cutoff=1, plot = T, fulldays = T){
   files <- list.files(path)
   fileext <- file_ext(files[1])
   nofiles <- length(files)
@@ -35,9 +35,17 @@ function (path, SR, cutoff=1, plot = T){
     if (any(is.na(data$activity)) == TRUE) stop("Please check your data! It must not contain NAs")
 
     a <- nrow(data) 
-    b <- floor(a/(SR*60)) 
-    e <- SR*60 
-    m <- bin_hr*SR*60  
+    e <- SR*60 ## samples per minute
+    m <- bin_hr*SR*60  ## samples per hour
+    full_days <- floor(a/(e*bin_hr*24))
+    
+    ## --- Cut data to full days
+    if (fulldays == T){
+      data <- data[1:(e*bin_hr*24*full_days),]
+    }
+    a <- nrow(data) 
+    b <- floor(a/(SR*60)) ## full minutes recorded
+    ## ------------------------------------------
     
     ## ---- Filtering, Cutoff for classification as movement
     nparACT_auxfunctions1$nparACT_filt(data, a, cutoff)

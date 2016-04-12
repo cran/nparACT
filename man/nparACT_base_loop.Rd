@@ -8,7 +8,7 @@ Classic Nonparametric Actigraphy Measures for Multiple Actigraphy Files
 Function returns IS, IV, RA, L5, M10 as well as L5 and M10 start times for multiple actigraphy files. The function also returns a plot for hourly grand averages across 24 hours. 
 }
 \usage{
-nparACT_base_loop(path, SR, cutoff = 1, plot = T)
+nparACT_base_loop(path, SR, cutoff = 1, plot = T, fulldays = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,6 +23,9 @@ Can be used to define a cutoff for actigraphy data. Default value is \code{1}, i
 }
   \item{plot}{
 If \code{TRUE} a plot is produced. Default is \code{TRUE}.
+}
+   \item{fulldays}{
+If \code{TRUE} only data from multiples of 24 hours (i.e. full days) are included while the rest of the data are discarded. Default is \code{TRUE}.
 }
 }
 %\details{

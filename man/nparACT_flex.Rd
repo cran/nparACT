@@ -8,7 +8,7 @@ Extended Nonparametric Actigraphy Measures for Single Actigraphy Files
 Function returns IS, IV, RA, L5, M10 as well as L5 and M10 start times for single actigraphy files. Additionally, it also returns the L value (Lflex) and the start time for a specified number of minutes. The function also returns a classic dual day plot for the data, a plot of minutewise averages across 24 hours as well as a plot for hourly averages across 24 hours. 
 }
 \usage{
-nparACT_flex(name, SR, cutoff = 1, minutes, plot = T)
+nparACT_flex(name, SR, cutoff = 1, minutes, plot = T, fulldays = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +26,9 @@ Number of minutes for which the Lflex value should be computed.
 }
   \item{plot}{
 If \code{TRUE} plots are produced. Default is \code{TRUE}.
+}
+  \item{fulldays}{
+If \code{TRUE} only data from multiples of 24 hours (i.e. full days) are included while the rest of the data are discarded. Default is \code{TRUE}.
 }
 }
 %\details{

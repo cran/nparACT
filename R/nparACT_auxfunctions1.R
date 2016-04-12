@@ -10,8 +10,8 @@ nparACT_auxfunctions1 <- list(
   },
   
   nparACT_data_min = function(b, SR, data){
-    data_min <- matrix(NA, b) # bug in nparACT 0.1 "data_min <- matrix(NA, (b/SR)/60)"
-    for (d in 1:b){ # nparACT 0.1 "for (d in 1:((b/SR)/60))"
+    data_min <- matrix(NA, b) 
+    for (d in 1:b){ 
       subset_min <- data$activity[(((d-1)*(SR*60))+1):((d*(SR*60)))]
       data_min[d] <- mean(subset_min)
     }

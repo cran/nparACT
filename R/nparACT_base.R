@@ -1,5 +1,5 @@
 nparACT_base <-
-function (name, SR, cutoff = 1, plot = T){
+function (name, SR, cutoff = 1, plot = T, fulldays = T){
   data <- get(name)
   if (is.data.frame(data)==F){
     data = as.data.frame(data)
@@ -22,9 +22,17 @@ function (name, SR, cutoff = 1, plot = T){
   
   bin_hr <- 60  
   a <- nrow(data) 
-  b <- floor(a/(SR*60)) 
-  e <- SR*60 
-  m <- bin_hr*SR*60  
+  e <- SR*60 ## samples per minute
+  m <- bin_hr*SR*60  ## samples per hour
+  full_days <- floor(a/(e*bin_hr*24))
+  
+  ## --- Cut data to full days
+  if (fulldays == T){
+    data <- data[1:(e*bin_hr*24*full_days),]
+  }
+  a <- nrow(data) 
+  b <- floor(a/(SR*60)) ## full minutes recorded
+  ## ------------------------------------------
   
   ## ---- Filtering, Cutoff for classification as movement
   nparACT_auxfunctions1$nparACT_filt(data, a, cutoff)
