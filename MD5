@@ -1,4 +1,4 @@
-17ec4dae4bc4be53493aefda0e23a5fe *DESCRIPTION
+d9e8c1d6ef1063e5ec8b28853d607a58 *DESCRIPTION
 e1b49d07e66e430269ef2eb651709545 *NAMESPACE
 9f659a6e9b239b77351e841331d964f1 *R/nparACT-internal.R
 c0144128526d555de9043760f15890ac *R/nparACT_ISIVfunctions.R
@@ -10,7 +10,7 @@ eb56760232171fccf81c4e116a6b59ba *R/nparACT_auxfunctions2.R
 be7eae6dc3643a071826b4d311ad331a *R/nparACT_flex.R
 af49f8f659b9db46fb7cded1986c624c *R/nparACT_flex_loop.R
 6000f8e638bd311f6e3ab8ccd7bb9532 *data/sleepstudy.rda
-f20a94fff8957d1a8a18521a5bed4ff0 *man/nparACT-package.Rd
+dfe5f6d28aedcf61b34e8a807f085073 *man/nparACT-package.Rd
 10fb2bd6a05aae18fbe4ec10b5e0da20 *man/nparACT_ISIVfunctions.Rd
 6b26c5667f9c52ee1c3c5373e9d492d6 *man/nparACT_RAfunctions.Rd
 16cb4f7f4e03146b0daf9ccb8c45b210 *man/nparACT_auxfunctions1.Rd
