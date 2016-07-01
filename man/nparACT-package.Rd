@@ -12,8 +12,8 @@ Computes interdaily stability (IS), intradaily variability (IV) and the relative
 \tabular{ll}{
 Package: \tab nparACT\cr
 Type: \tab Package\cr
-Version: \tab 0.5\cr
-Date: \tab 2016-06-06\cr
+Version: \tab 0.6\cr
+Date: \tab 2016-07-01\cr
 }
 }
 \author{

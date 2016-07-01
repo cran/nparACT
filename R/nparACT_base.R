@@ -42,7 +42,7 @@ function (name, SR, cutoff = 1, plot = T, fulldays = T){
   if (SR != 1/60){
     data_min <- nparACT_auxfunctions1$nparACT_data_min(b, SR, data)
   }  else {
-    data_min <- data
+    data_min <- data$activity
   }
   ## ------------------------------------------
   
