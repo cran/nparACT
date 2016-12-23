@@ -12,8 +12,8 @@ Computes interdaily stability (IS), intradaily variability (IV) and the relative
 \tabular{ll}{
 Package: \tab nparACT\cr
 Type: \tab Package\cr
-Version: \tab 0.6\cr
-Date: \tab 2016-07-01\cr
+Version: \tab 0.7\cr
+Date: \tab 2016-12-23\cr
 }
 }
 \author{
@@ -22,8 +22,8 @@ Nayantara Santhi <n.santhi@surrey.ac.uk>
 Manuel Schabus <manuel.schabus@sbg.ac.at>
 }
 \references{
-Blume C., Santhi N., Schabus M. (2016). "nparACT" package for R: A free software tool for the non-parametric analysis of actigraphy data. MethodsX 3: 430-435.
-van Someren E.J., Swaab D.F., Colenda C.C., Cohen W., McCall W.V., Rosenquist P.B. (1999). Bright Light Therapy - Improved sensitivity to its effects on rest-activity rhythms in alzheimer patients by application of nonparametric methods. Chronobiology International 16(4): 505-18.
+Blume C., Santhi N., Schabus M. (2016). "nparACT" package for R: A free software tool for the non-parametric analysis of actigraphy data. MethodsX 3: 430-435. <doi:10.1016/j.mex.2016.05.006>
+van Someren E.J., Swaab D.F., Colenda C.C., Cohen W., McCall W.V., Rosenquist P.B. (1999). Bright Light Therapy - Improved sensitivity to its effects on rest-activity rhythms in alzheimer patients by application of nonparametric methods. Chronobiology International 16(4): 505-18. <doi:10.3109/07420529908998724>
 }
 \keyword{ package }
 \examples{

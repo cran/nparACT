@@ -92,12 +92,12 @@ nparACT_auxfunctions2 <- list(
       expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
-      ggtitle("Actigraphy Plot (48 hrs)\n Dual Day Display")+
+      ggtitle("Actigraphy Plot (48 hrs)", subtitle = "Dual Day Display")+
       theme(plot.margin=unit(c(1,14,1,14),"cm"),
             axis.text.x = element_blank(),
-            axis.title.x = element_text(face="bold", size=14),
-            axis.title.y = element_text(face="bold", size=14, vjust = 1.2),
-            plot.title = element_text(face="bold", size=16, vjust = 1))
+            axis.title.x = element_text(face="bold", size=12),
+            axis.title.y = element_text(face="bold", size=12, vjust = 1.2),
+            plot.title = element_text(face="bold", size=14, vjust = 1))
     print(p)
   },
   
@@ -124,6 +124,9 @@ nparACT_auxfunctions2 <- list(
     
     for_hraverage_plot.time <- rep(seq(1,24),2)
     seq <- seq(start.time, length.out = 24)
+    if (seq[1] == 0){
+      seq[1] = 24 ## changed 21 12 16, accounts for case in which start time is midnight
+    }
     hraverage_plot_time <- for_hraverage_plot.time[seq]
     hraverage_plot_time[hraverage_plot_time==24] <- 0
     hraverage_plot_df <- data.frame (hraverage_plot_time, hraverage)
@@ -135,12 +138,12 @@ nparACT_auxfunctions2 <- list(
       expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
-      ggtitle("Actigraphy Plot (24 hrs)\n Average across days")+
+      ggtitle("Actigraphy Plot (24 hrs)", subtitle = "Average across days")+
       theme(plot.margin=unit(c(1,2,1,2),"cm"),
             axis.text.x = element_blank(),
-            axis.title.x = element_text(face="bold", size=14),
-            axis.title.y = element_text(face="bold", size=14, vjust = 1.2),
-            plot.title = element_text(face="bold", size=16, vjust = 1))
+            axis.title.x = element_text(face="bold", size=12),
+            axis.title.y = element_text(face="bold", size=12, vjust = 1.2),
+            plot.title = element_text(face="bold", size=14, vjust = 1))
     print(ppp)
   },
   
@@ -160,11 +163,15 @@ nparACT_auxfunctions2 <- list(
     temp = unlist(str_split(timeinfo, ':') )
     temp_nums = 1:length(temp)
     timeinfo = temp[ (temp_nums %% 3) == 1 ] 
-    start.time <- as.numeric(timeinfo[1]) 
+    start.time_h <- as.numeric(timeinfo[1])
+    start.time_min <- as.numeric(temp[2]) ## changed 21 12 16 -> select start minute, was [1] for hour previously
     
     for_minaverage_plot.time <- rep(seq(1,1440),2)
-    seq <- seq(start.time*60, length.out = 1440)
-    minaverage_plot_time <- for_minaverage_plot.time[seq]
+    seq <- seq(start.time_h*60+start.time_min, length.out = 1440) ## 21 12 16: was start.time*60 when input was hours only
+    if (seq[1] == 0){  ## changed 21 12 16, accounts for case in which start time is midnight
+      seq[1] = 1440
+    }
+    minaverage_plot_time <- for_minaverage_plot.time[seq] # time info, vectors will be joined in next step
     
     minaverage_plot_df <- data.frame (minaverage_plot_time, minaverage)
     
@@ -175,12 +182,12 @@ nparACT_auxfunctions2 <- list(
       expand_limits(x=c(-30,1470))+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
-      ggtitle("Actigraphy Plot (24 hrs)\n Average across days")+
+      ggtitle("Actigraphy Plot (24 hrs)", subtitle = "Average across days")+
       theme(plot.margin=unit(c(1,2,1,2),"cm"),
             axis.text.x = element_blank(),
-            axis.title.x = element_text(face="bold", size=14),
-            axis.title.y = element_text(face="bold", size=14, vjust = 1.2),
-            plot.title = element_text(face="bold", size=16, vjust = 1))
+            axis.title.x = element_text(face="bold", size=12),
+            axis.title.y = element_text(face="bold", size=12, vjust = 1.2),
+            plot.title = element_text(face="bold", size=14, vjust = 1))
     print(pp)
   },
   
@@ -197,12 +204,12 @@ nparACT_auxfunctions2 <- list(
       expand_limits(x=-1)+
       xlab("Time \n (Start: 0am)")+
       ylab("Movement Intensity")+
-      ggtitle("Grand Average Actigraphy Plot (24 hrs)\n Average across days")+
+      ggtitle("Grand Average Actigraphy Plot (24 hrs)", subtitle = "Average across days")+
       theme(plot.margin=unit(c(1,2,1,2),"cm"),
             axis.text.x = element_blank(),
-            axis.title.x = element_text(face="bold", size=14),
-            axis.title.y = element_text(face="bold", size=14, vjust = 1.2),
-            plot.title = element_text(face="bold", size=16, vjust = 1))
+            axis.title.x = element_text(face="bold", size=12),
+            axis.title.y = element_text(face="bold", size=12, vjust = 1.2),
+            plot.title = element_text(face="bold", size=14, vjust = 1))
     print(p)
   }
 )
