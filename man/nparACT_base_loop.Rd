@@ -54,13 +54,13 @@ Manuel Schabus <manuel.schabus@sbg.ac.at>
 \examples{
 # example function nparACT_loop
 data(sleepstudy)
-wd <- getwd()
 name <- "sleepstudy_example"
-newdir <- paste(wd,name, sep="/")
-dir.create(newdir)
-setwd(newdir)
+newdir <- file.path(tempdir(),name)
+dir.create(newdir, showWarnings = FALSE)
+olddir <- setwd(newdir)
 write.table(sleepstudy, file = "sleepstudy.txt", row.names=FALSE, col.names = FALSE)
 r <- nparACT_base_loop(newdir, SR = 4/60)
+setwd(olddir)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -57,13 +57,13 @@ Manuel Schabus <manuel.schabus@sbg.ac.at>
 \examples{
 # example function nparACT_flex_loop
 data(sleepstudy)
-wd <- getwd()
 name <- "sleepstudy_example"
-newdir <- paste(wd,name, sep="/")
-dir.create(newdir)
-setwd(newdir)
-write.table(sleepstudy, file = "sleepstudy.txt", row.names = FALSE, col.names = FALSE)
+newdir <- file.path(tempdir(),name)
+dir.create(newdir, showWarnings = FALSE)
+olddir <- setwd(newdir)
+write.table(sleepstudy, file = "sleepstudy.txt", row.names=FALSE, col.names = FALSE)
 r <- nparACT_flex_loop(newdir, SR = 4/60, minutes = 435)
+setwd(olddir)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
