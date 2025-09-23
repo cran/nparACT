@@ -1,0 +1,78 @@
+---
+title: "Introduction to the nparACT package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the nparACT package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Package and main function
+The package computes the interdaily stability (IS), intradaily variability (IV) 
+and relative amplitude (RA) of activity values. Moreover, it gives the start times 
+and average activity of M10 (i.e. 10 h with maximal activity) and L5 
+(i.e. five hours with least activity). In the package, we additionally included 
+the possibility to find the lowest activity during a user-defined time window,
+termed the Lflex value. This way one could, for instance, look for the 7.5 h with 
+least activity in a group of insomniacs and see whether their average activity 
+levels during this time or whether the start time deviates from a healthy control 
+group.
+For further details, please see the accompanying publication by Blume et al. https://doi.org/10.1016/j.mex.2016.05.006.
+
+### Worked example
+
+First, we install and load the package if we haven’t done so.
+
+```{r setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+## First, we save your current workspace
+save.image(file=paste(tempdir(), "currsession.RData", sep = "/"))
+## make sure you start with a clean session.
+rm(list = ls(all = TRUE))
+install.packages("nparACT", repos = "http://cran.us.r-project.org")
+```
+
+Then, we are ready to use the package on our data set.
+
+##### Create directory & save data file
+
+First, we load the `sleepstudy` file that comes with the package and
+create a directory, where we save it.
+
+```{r echo=TRUE, warning=FALSE, results='asis'} 
+library(nparACT)
+data(sleepstudy)
+
+## save current working directory so we can reset this later.
+olddir <- getwd()
+
+## create a new directory in the temporary directory (don't worry, it will automatically be deleted  
+## when you restart your computer)
+newdir <- file.path(tempdir(),"nparACT_exmpl")
+dir.create(newdir, showWarnings = FALSE)
+
+## write the sleepstudy file to this new directory
+write.table(sleepstudy, file = paste(newdir, "sleepstudy.txt", sep = "/"),
+row.names=FALSE, col.names = FALSE, quote = FALSE, sep = ",")
+```
+
+##### Run the analyses
+
+Then, we apply the actual analysis function.
+
+```{r echo=TRUE, warning=FALSE, results='asis', eval = FALSE} 
+nparACT::nparACT_base("sleepstudy", SR = 4/60) 
+
+## We again load the workspace image from before the code above was executed
+save.image(file=paste(tempdir(), "currsession.RData", sep = "/"))
+
+## we set the directory back to the one we were using before as we were just working in the  
+## temp directory.
+setwd(olddir)
+```

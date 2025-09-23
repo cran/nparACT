@@ -1,0 +1,15 @@
+citHeader("To cite nparACT in publications use:")
+
+bibentry(
+  bibtype = "Article",
+  title   = "‘nparACT’ package for R: A free software tool for the non-parametric analysis of actigraphy data",
+  author  = c(
+    as.person("Christine Blume"),
+    as.person("Nayantara Santhi"),
+    as.person("Manuel Schabus")
+  ),
+  journal = "MethodsX",
+  year    = "2016",
+  doi     = "10.1016/j.mex.2016.05.006",
+  url     = "https://www.sciencedirect.com/science/article/pii/S221501611630022X?via%3Dihub"
+)

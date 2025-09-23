@@ -1,10 +1,18 @@
+#' @import ggplot2 zoo grid stringr tools
+#'
+#' @importFrom utils read.csv read.table
+#' @importFrom tools file_ext
+
 nparACT_base_loop <-
+
+  #' @description Computes the classic non-parametric actigraphy measures IS, IV, RA and the M10 and L5 values and their start times looping through all files in a folder.
+
 function (path, SR, cutoff=1, plot = T, fulldays = T){
   files <- list.files(path)
-  fileext <- file_ext(files[1])
+  fileext <- tools::file_ext(files[1])
   nofiles <- length(files)
   if (nofiles !=0){
-    bin_hr <- 60  
+    bin_hr <- 60
     nparACT_result <- matrix(NA, nofiles, 7)
     nparACT_result <- as.data.frame(nparACT_result)
     colnames(nparACT_result) <- c("IS", "IV", "RA", "L5", "L5_starttime", "M10", "M10_starttime")
@@ -12,9 +20,9 @@ function (path, SR, cutoff=1, plot = T, fulldays = T){
     for (zz in 1:nofiles){
       name <- files[zz]
       if (fileext == "txt"){
-        data <- read.table(paste(path,name, sep="/"), header = F)
+        data <- utils::read.table(paste(path,name, sep="/"), header = F)
       } else {
-        data <- read.csv(paste(path,name, sep="/"), header = F)
+        data <- utils::read.csv(paste(path,name, sep="/"), header = F)
       }
       if (is.data.frame(data)==F){
         data = as.data.frame(data)
@@ -29,30 +37,30 @@ function (path, SR, cutoff=1, plot = T, fulldays = T){
         names(data)[2] <- "time"
         names(data)[3] <- "activity"
         data$date <- NULL
-        data$time <- as.POSIXct(data$time, format="%H:%M:%S")  
+        data$time <- as.POSIXct(data$time, format="%H:%M:%S")
         data$activity <- as.numeric(as.character(data$activity))
       }else{
         stop("Oops, your data does not seem to have the correct format.")
       }
       if (any(is.na(data$activity)) == TRUE) stop("Please check your data! It must not contain NAs")
-      
-      a <- nrow(data) 
+
+      a <- nrow(data)
       e <- SR*60 ## samples per minute
       m <- bin_hr*SR*60  ## samples per hour
       full_days <- floor(a/(e*bin_hr*24))
-      
+
       ## --- Cut data to full days
       if (fulldays == T){
         data <- data[1:(e*bin_hr*24*full_days),]
       }
-      a <- nrow(data) 
+      a <- nrow(data)
       b <- floor(a/(SR*60)) ## full minutes recorded
       ## ------------------------------------------
-      
+
       ## ---- Filtering, Cutoff for classification as movement
       nparACT_auxfunctions1$nparACT_filt(data, a, cutoff)
       ## ------------------------------------------
-      
+
       ## ---- Calculate average for each minute (needed if SR != 1/60)
       if (SR != 1/60){
         data_min <- nparACT_auxfunctions1$nparACT_data_min(b, SR, data)
@@ -60,11 +68,11 @@ function (path, SR, cutoff=1, plot = T, fulldays = T){
         data_min <- data$activity
       }
       ## ------------------------------------------
-      
+
       ## ---- Calculate hourly averages
       data_hrs <- nparACT_auxfunctions1$nparACT_data_hrs(data, a, m)
       ## -----------------------------------------------------------------------------
-      
+
       ## ---- IS/IV calculation (based on data_hrs!)
       result_ISIV <- nparACT_ISIVfunctions$nparACT_ISIV(data_hrs, bin_hr)
       IS <- result_ISIV[1]
@@ -72,23 +80,23 @@ function (path, SR, cutoff=1, plot = T, fulldays = T){
       nparACT_result[zz,1] <- IS
       nparACT_result[zz,2] <- IV
       ## ---------------------------------------------------------------------------------
-      
+
       ## ---------- Relative Amplitude (RA) calculation
       ## ---- Minutewise averages across 24hrs
       minaverage <- nparACT_auxfunctions1$nparACT_minaverage(a, data_min)
       ## --------------------------------
-      
+
       ## ----- Compute & Plot hourly averages (Grand Average Plot)
       if(plot == T){
         hraverage_sorted <- nparACT_auxfunctions1$nparACT_hraverage_GA_loop(minaverage, data, a , SR)
         matrix_hraverage[zz,] <- hraverage_sorted
       }
       ## --------------------------------------------------
-      
+
       ## ---- L5, M10, RA calculation
       result_RA <- nparACT_RAfunctions$nparACT_L5M10(data, minaverage, a, SR)
-      result_RA <- as.data.frame(result_RA) 
-      
+      result_RA <- as.data.frame(result_RA)
+
       nparACT_result[zz,3] <- result_RA$RA
       nparACT_result[zz,4] <- result_RA$L5
       nparACT_result[zz,5] <- as.character(result_RA$L5_starttime)
